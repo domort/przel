@@ -1,0 +1,13 @@
+{% extends 'registration/base.html' %}
+
+{% block card-title %}Registration closed{% endblock %}
+
+{% block card-body %}
+    <p class="card-text">Registration is currently closed.</p>
+    <p class="card-text">Sorry for the inconvenience.</p>
+{% endblock %}
+
+{% block card-footer %}
+    <a class="d-block small" href="{% url 'auth_login' %}">Login Page</a>
+    <a class="d-block small" href="{% url 'auth_password_reset' %}">Forgot Password?</a>
+{% endblock %}

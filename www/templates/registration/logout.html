@@ -1,0 +1,11 @@
+{% extends 'registration/base.html' %}
+
+{% block card-title %}Logged out{% endblock %}
+
+{% block card-body %}
+    <p class="card-text">You have logged out successfully.</p>
+{% endblock %}
+
+{% block card-footer %}
+    <a class="d-block small" href="{% url 'auth_login' %}">Login Page</a>
+{% endblock %}

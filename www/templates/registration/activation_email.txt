@@ -1,0 +1,10 @@
+Hi, {{ user.full_name }}
+
+Thanks for signing up for {{ site.name }}.
+
+Please confirm your account:
+{{ protocol }}://{{ site.domain }}{% url 'registration_activate' activation_key %}"
+
+Link is valid for {{ expiration_days }} days.
+
+-- The Przeliczacz Team

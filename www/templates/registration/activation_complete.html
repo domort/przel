@@ -1,0 +1,11 @@
+{% extends 'registration/base.html' %}
+
+{% block card-title %}Account activated{% endblock %}
+
+{% block card-body %}
+    <p class="card-text">Your account is now activated. You can now <a href="{% url 'auth_login' %}">log in</a>.
+{% endblock %}
+
+{% block card-footer %}
+    <a class="d-block small" href="{% url 'auth_login' %}">Login Page</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'registration/base.html' %}
+
+{% block card-title %}Activation failed{% endblock %}
+
+{# TODO: make this better: ask to resend code / recognize if user is already activated #}
+
+{% block card-body %}
+    <p class="card-text">Account activation failed</p>
+{% endblock %}
+
+{% block card-footer %}
+    <a class="d-block small" href="{% url 'auth_login' %}">Login Page</a>
+{% endblock %}

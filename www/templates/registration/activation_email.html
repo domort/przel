@@ -1,0 +1,14 @@
+
+<h4>
+    Hi, {{ user.full_name }}
+</h4>
+
+<p>Thanks for signing up for {{ site.name }}.</p>
+
+<p>
+    <a href="{{ protocol }}://{{ site.domain }}{% url 'registration_activate' activation_key %}" class="button" style=" display: inline-block; color: #ffffff; background-color: rgb(52, 58, 64); border-color: rgb(34, 37, 64);  border-radius: 5px;  text-align: center; padding: 10px; font-size: 16px; text-decoration: none; text-transform: uppercase;">Confirm your account</a>
+</p>
+
+<p>Link is valid for {{ expiration_days }} days.</p>
+
+<p><i>-- The Przeliczacz Team</i></p>

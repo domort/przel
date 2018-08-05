@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block main-content %}
+    <table id="example">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Energy</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in object_list %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.energy }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{# name = models.CharField(null=False, blank=False, unique=True, verbose_name='Name', max_length=255)#}
+{#    unit_weight = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Unit weight')#}
+{#    unit_description = models.TextField(null=False, blank=True, verbose_name='Unit Description')#}
+{#    category = models.CharField(null=False, blank=True, verbose_name='Name', max_length=255)#}
+{##}
+{#    protein = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Protein')#}
+{#    carb = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Carbs')#}
+{#    fat = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Fat')#}
+{#    energy = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Energy')#}
+{##}
+{#    fat_sat = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Fat saturated')#}
+{#    fiber = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Fiber')#}
+{#    salt = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Salt')#}
+
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+{% endblock %}

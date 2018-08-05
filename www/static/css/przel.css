@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'Sunshiney';
+  src: url('vendor/fonts/sunshiney.ttf');
+}
+
+.center-text {
+    text-align: center;
+}
+
+.przel-logo-text {
+    font-family: 'Sunshiney', 'Georgia', serif;
+    font-size: 26px;
+    color: #b1b1b1;
+}
+
+.przel-logo-img {
+    height: 40px;
+}
+
+.logo-abs .przel-logo-img {
+    position: absolute;
+    top: 4px;
+}
+
+.logo-abs .przel-logo-text {
+    position: absolute;
+    top: 6px;
+    left: 114px;
+}
+
+.logo-centered {
+    width: 100%;
+    margin: 0 auto;
+    display: inline-block;
+    padding-top: 20px;
+}
+
+.logo-centered .przel-logo-text {
+    vertical-align: bottom;
+}
+
+.recaptcha-container {
+    min-height: 85px;
+}
+
+.recaptcha-container.recaptcha-invalid .g-recaptcha div iframe {
+    border: 1px solid red !important;
+}

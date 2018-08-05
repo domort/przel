@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+
+{% load static helpers %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Przeliczacz aplikejszyn">
+    <meta name="author" content="domort">
+
+    <title>{% block title %}Przeliczacz{% endblock %}</title>
+
+    <link rel="icon" type="image/png" href="{% static 'images/favicons/przel-apple-32.ico' %}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{% static 'images/favicons/przel-apple-16.ico' %}" sizes="16x16">
+
+    <link href="{% static 'css/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/vendor/font-awesome/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/vendor/sb-admin/sb-admin.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/przel.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body class="bg-dark">
+<div class="container">
+    <div class="row">
+        <div class="col-12 center-text">
+            <div class="logo-centered">
+                {% include 'partials/logo.html' %}
+            </div>
+        </div>
+    </div>
+    {% block main-content %}
+        <div class="card {% block card-class %}card-login{% endblock %} mx-auto mt-4">
+            <div class="card-header">{% block card-title %}{% endblock %}</div>
+            <div class="card-body">
+                {% message_alerts messages %}
+                {% block card-body %}{% endblock %}
+            </div>
+            <div class="card-footer text-muted text-center">
+                {% block card-footer %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</div>
+<script src='{% static 'js/vendor/jquery/jquery.min.js' %}'></script>
+<script src='{% static 'js/vendor/bootstrap/bootstrap.bundle.min.js' %}'></script>
+<script src='{% static 'js/vendor/jquery-easing/jquery.easing.min.js' %}'></script>
+</body>
+</html>

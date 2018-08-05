@@ -1,0 +1,20 @@
+{% extends 'registration/base.html' %}
+
+{% block card-title %}Please activate your Account{% endblock %}
+
+{% block card-body %}
+    <p class="card-text">You are now registered.</p>
+    <p class="card-text">Before you can login, you must active your account with the code sent to your email
+        address.</p>
+    <p class="card-text">If you did not receive this email, please check your junk/spam folder.</p>
+    {#  <p><a href="#">Click here</a> to resend the activation email.</p> #}
+    <p class="card-text">
+        If you entered an incorrect email address, you will need to <a href="{% url 'registration_register' %}">re-register</a>
+        with the correct email address.
+    </p>
+{% endblock %}
+
+{% block card-footer %}
+    <a class="d-block small" href="{% url 'auth_login' %}">Login Page</a>
+    <a class="d-block small" href="{% url 'auth_password_reset' %}">Forgot Password?</a>
+{% endblock %}
