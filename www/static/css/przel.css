@@ -7,6 +7,10 @@
     text-align: center;
 }
 
+.no-display {
+    display: none;
+}
+
 .przel-logo-text {
     font-family: 'Sunshiney', 'Georgia', serif;
     font-size: 26px;

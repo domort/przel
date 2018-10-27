@@ -1,44 +1,124 @@
 {% extends 'base.html' %}
 
 {% block main-content %}
-    <table id="example">
+    <script>
+        blockui();
+    </script>
+    <style>
+        .prod-value-text.toggleable {
+            cursor: pointer;
+        }
+    </style>
+    <div id="hide" style="display:none">
+    <table id="product-datatable">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Energy</th>
-            </tr>
+        <tr>
+            <th style="width:47%;">Name</th>
+            <th style="width:7%;">Carbs</th>
+            <th style="width:7%;">Protein</th>
+            <th style="width:7%;">Fat</th>
+            <th style="width:7%;">Energy</th>
+            <th style="width:11%;">Unit weight</th>
+            <th style="width:10%;" class="no-sort {# TODO: implement no-sort for datatables #}">Actions</th>
+            <th>Product</th>
+        </tr>
         </thead>
         <tbody>
-            {% for product in object_list %}
-                <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.energy }}</td>
-                </tr>
-            {% endfor %}
+        {% for product in object_list %}
+            <tr data-prod-slug="{{ product.slug }}">
+                <td>
+                    <div class="prod-value-text toggleable">
+                        <span>{{ product.name }}</span>
+                    </div>
+                    <div class="prod-value-input no-display">
+                        <input required type="text" maxlength="255" class="form-control"
+                               value="{{ product.name }}" placeholder="Product name">
+                    </div>
+                </td>
+                <td>
+                    <div class="prod-value-text toggleable">
+                        <span>{{ product.carb.normalize }}</span>
+                    </div>
+                    <div class="prod-value-input no-display">
+                        <input required type="number" step="0.01" min="0" class="form-control"
+                               value="{{ product.carb.normalize }}" placeholder="Carbs">
+                    </div>
+                </td>
+                <td>
+                    <div class="prod-value-text toggleable">
+                        <span>{{ product.protein.normalize }}</span>
+                    </div>
+                    <div class="prod-value-input no-display">
+                        <input required type="number" step="0.01" min="0" class="form-control"
+                               value="{{ product.protein.normalize }}" placeholder="Protein">
+                    </div>
+                </td>
+                <td>
+                    <div class="prod-value-text toggleable">
+                        <span>{{ product.fat.normalize }}</span>
+                    </div>
+                    <div class="prod-value-input no-display">
+                        <input required type="number" step="0.01" min="0" class="form-control"
+                               value="{{ product.fat.normalize }}" placeholder="Fat">
+                    </div>
+                </td>
+                <td>
+                    <div class="prod-value-text toggleable">
+                        <span>{{ product.energy.normalize }}</span>
+                    </div>
+                    <div class="prod-value-input no-display">
+                        <input required type="number" step="0.01" min="0" class="form-control"
+                               value="{{ product.energy.normalize }}" placeholder="Energy">
+                    </div>
+                </td>
+                <td>
+                    <div class="prod-value-text toggleable">
+                        <span>{{ product.unit_weight.normalize }}</span>
+                    </div>
+                    <div class="prod-value-input no-display">
+                        <input required type="number" step="0.01" min="0" class="form-control"
+                               value="{{ product.unit_weight.normalize }}" placeholder="Unit weight">
+                    </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Add to meal">
+                        <i class="fa fas fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Edit">
+                        <i class="fa fas fa-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Delete">
+                        <i class="fa fas fa-trash"></i>
+                    </button>
+                </td>
+                <td>
+                    mob
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
+    </div>
 {% endblock %}
-
-{# name = models.CharField(null=False, blank=False, unique=True, verbose_name='Name', max_length=255)#}
-{#    unit_weight = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Unit weight')#}
-{#    unit_description = models.TextField(null=False, blank=True, verbose_name='Unit Description')#}
-{#    category = models.CharField(null=False, blank=True, verbose_name='Name', max_length=255)#}
-{##}
-{#    protein = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Protein')#}
-{#    carb = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Carbs')#}
-{#    fat = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Fat')#}
-{#    energy = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Energy')#}
-{##}
-{#    fat_sat = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Fat saturated')#}
-{#    fiber = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Fiber')#}
-{#    salt = models.DecimalField(max_digits=16, decimal_places=2, null=True, blank=True, verbose_name='Salt')#}
-
 
 {% block scripts %}
     {{ block.super }}
     <script>
+
         $(document).ready(function () {
-            $('#example').DataTable();
+            $('#product-datatable').DataTable({
+                dom: 'Bfrtip',
+                responsive: true,
+                columnDefs: [
+{#                    {targets: "_all", orderable: false},#}
+                    {targets: [0, 1, 2, 3, 4, 5, 6], className: "desktop"},
+                    {targets: [7], className: "tablet, mobile"}
+                ],
+                initComplete: function() {
+                    $('#hide').show();
+                    unblockui();
+                }
+            });
         });
     </script>
 {% endblock %}

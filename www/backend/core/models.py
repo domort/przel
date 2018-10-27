@@ -72,10 +72,10 @@ class Product(models.Model):
         return '{} [{}]'.format(self.name or "<Unnamed Item>", self.category or '<Uncategorized>')
 
     def _get_unique_slug(self):
-        slug = slugify(self.name[:40])
+        slug = slugify(self.name[:30])
         unique_slug = slug
         num = 1
-        while Product.objects.filter(slug=unique_slug).exists():
+        while self.__class__.objects.filter(slug=unique_slug).exists():
             unique_slug = '{}-{}'.format(slug, num)
             num += 1
         return unique_slug
@@ -84,3 +84,17 @@ class Product(models.Model):
         if not self.slug:
             self.slug = self._get_unique_slug()
         super(Product, self).save(*args, **kwargs)
+
+
+class Meal(models.Model):
+    user = models.OneToOneField(EmailBasedUser, null=False, blank=False, related_name="meal")
+
+
+class MealElement(models.Model):
+    meal = models.ManyToManyField(Meal, related_name="meal_elements")
+    product = models.OneToOneField(Product, null=False, blank=False)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=1)
+    in_grams = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return 'Product: {}, Amount: {}, In grams: {}'.format(self.product, self.amount, self.in_grams)

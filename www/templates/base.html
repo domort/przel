@@ -21,6 +21,10 @@
     <link href="{% static 'css/vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/vendor/sb-admin/sb-admin.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/przel.css' %}" rel="stylesheet" type="text/css">
+
+    {% block scripts %}
+        {% include 'partials/scripts.html' %}
+    {% endblock %}
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark {# sidenav-toggled #}" id="page-top">
@@ -48,7 +52,5 @@
     {% include 'partials/modal-logout.html' %}
 </div>
 </body>
-{% block scripts %}
-    {% include 'partials/scripts.html' %}
-{% endblock %}
+
 </html>

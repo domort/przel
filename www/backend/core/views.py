@@ -15,11 +15,21 @@ from django.template.loader import render_to_string
 from registration.backends.hmac.views import RegistrationView, ActivationView
 from backend.core.models import Product
 from backend.core.forms import EmailBasedUserForm
-from backend.core.models import EmailBasedUser
+from backend.core.models import EmailBasedUser, Meal
 
 
 class MealView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'meal.html'
+
+    def get_context_data(self, **kwargs):
+        try:
+            meal = self.request.user.meal
+        except Meal.DoesNotExist:
+            meal = None
+        return {'user_meal': meal}
+
+    def post(self, request, *args, **kwargs):
+        pass
 
 
 class ProductCreateView(LoginRequiredMixin, generic.CreateView):
