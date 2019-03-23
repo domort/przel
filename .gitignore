@@ -3,3 +3,4 @@
 .idea
 przel_config.json
 start_local.sh
+.DS_Store

@@ -11,6 +11,7 @@ from django.contrib.auth import views as auth_views
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.loader import render_to_string
+from django.http import JsonResponse, HttpResponseForbidden
 
 from registration.backends.hmac.views import RegistrationView, ActivationView
 from backend.core.models import Product
@@ -56,6 +57,20 @@ class ProductListView(LoginRequiredMixin, generic.ListView):
         context.update({"title": "Product List"})
         # context.update({'object_list': models.Product.objects.all().extra(select={'lower_name': 'lower(name)'}).order_by('lower_name')})
         return context
+
+
+class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Product
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return JsonResponse({'success': True})
+
+    def post(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            return HttpResponseForbidden()
+        return self.delete(request, *args, **kwargs)
 
 
 class PrzelLoginView(auth_views.LoginView):

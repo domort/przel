@@ -9,116 +9,143 @@
             cursor: pointer;
         }
     </style>
-    <div id="hide" style="display:none">
-    <table id="product-datatable">
-        <thead>
-        <tr>
-            <th style="width:47%;">Name</th>
-            <th style="width:7%;">Carbs</th>
-            <th style="width:7%;">Protein</th>
-            <th style="width:7%;">Fat</th>
-            <th style="width:7%;">Energy</th>
-            <th style="width:11%;">Unit weight</th>
-            <th style="width:10%;" class="no-sort {# TODO: implement no-sort for datatables #}">Actions</th>
-            <th>Product</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for product in object_list %}
-            <tr data-prod-slug="{{ product.slug }}">
-                <td>
-                    <div class="prod-value-text toggleable">
-                        <span>{{ product.name }}</span>
-                    </div>
-                    <div class="prod-value-input no-display">
-                        <input required type="text" maxlength="255" class="form-control"
-                               value="{{ product.name }}" placeholder="Product name">
-                    </div>
-                </td>
-                <td>
-                    <div class="prod-value-text toggleable">
-                        <span>{{ product.carb.normalize }}</span>
-                    </div>
-                    <div class="prod-value-input no-display">
-                        <input required type="number" step="0.01" min="0" class="form-control"
-                               value="{{ product.carb.normalize }}" placeholder="Carbs">
-                    </div>
-                </td>
-                <td>
-                    <div class="prod-value-text toggleable">
-                        <span>{{ product.protein.normalize }}</span>
-                    </div>
-                    <div class="prod-value-input no-display">
-                        <input required type="number" step="0.01" min="0" class="form-control"
-                               value="{{ product.protein.normalize }}" placeholder="Protein">
-                    </div>
-                </td>
-                <td>
-                    <div class="prod-value-text toggleable">
-                        <span>{{ product.fat.normalize }}</span>
-                    </div>
-                    <div class="prod-value-input no-display">
-                        <input required type="number" step="0.01" min="0" class="form-control"
-                               value="{{ product.fat.normalize }}" placeholder="Fat">
-                    </div>
-                </td>
-                <td>
-                    <div class="prod-value-text toggleable">
-                        <span>{{ product.energy.normalize }}</span>
-                    </div>
-                    <div class="prod-value-input no-display">
-                        <input required type="number" step="0.01" min="0" class="form-control"
-                               value="{{ product.energy.normalize }}" placeholder="Energy">
-                    </div>
-                </td>
-                <td>
-                    <div class="prod-value-text toggleable">
-                        <span>{{ product.unit_weight.normalize }}</span>
-                    </div>
-                    <div class="prod-value-input no-display">
-                        <input required type="number" step="0.01" min="0" class="form-control"
-                               value="{{ product.unit_weight.normalize }}" placeholder="Unit weight">
-                    </div>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Add to meal">
-                        <i class="fa fas fa-plus"></i>
-                    </button>
-                    <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Edit">
-                        <i class="fa fas fa-pencil"></i>
-                    </button>
-                    <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Delete">
-                        <i class="fa fas fa-trash"></i>
-                    </button>
-                </td>
-                <td>
-                    mob
-                </td>
+    <div id="hide" class="no-display">
+        <table id="product-datatable" class="table-striped" style="width: 100%;">
+            <thead>
+            <tr>
+                <th style="width:43%;">Name</th>
+                <th style="width:7%;">Carbs</th>
+                <th style="width:7%;">Protein</th>
+                <th style="width:7%;">Fat</th>
+                <th style="width:7%;">Energy</th>
+                <th style="width:11%;">Unit weight</th>
+                <th style="width:14%;" class="no-sort">Actions</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for product in object_list %}
+                <tr data-prod-slug="{{ product.slug }}">
+                    <td>
+                        <div class="prod-value-text toggleable">
+                            <span>{{ product.name }}</span>
+                        </div>
+                        <div class="prod-value-input no-display">
+                            <input required type="text" maxlength="255" class="form-control"
+                                   value="{{ product.name }}" placeholder="Product name">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="prod-value-text toggleable">
+                            <span>{{ product.carb.normalize }}</span>
+                        </div>
+                        <div class="prod-value-input no-display">
+                            <input required type="number" step="0.01" min="0" class="form-control"
+                                   value="{{ product.carb.normalize }}" placeholder="Carbs">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="prod-value-text toggleable">
+                            <span>{{ product.protein.normalize }}</span>
+                        </div>
+                        <div class="prod-value-input no-display">
+                            <input required type="number" step="0.01" min="0" class="form-control"
+                                   value="{{ product.protein.normalize }}" placeholder="Protein">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="prod-value-text toggleable">
+                            <span>{{ product.fat.normalize }}</span>
+                        </div>
+                        <div class="prod-value-input no-display">
+                            <input required type="number" step="0.01" min="0" class="form-control"
+                                   value="{{ product.fat.normalize }}" placeholder="Fat">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="prod-value-text toggleable">
+                            <span>{{ product.energy.normalize }}</span>
+                        </div>
+                        <div class="prod-value-input no-display">
+                            <input required type="number" step="0.01" min="0" class="form-control"
+                                   value="{{ product.energy.normalize }}" placeholder="Energy">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="prod-value-text toggleable">
+                            <span>{{ product.unit_weight.normalize }}</span>
+                        </div>
+                        <div class="prod-value-input no-display">
+                            <input required type="number" step="0.01" min="0" class="form-control"
+                                   value="{{ product.unit_weight.normalize }}" placeholder="Unit weight">
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Delete" onclick="question_delete('{{ product.slug }}', '{{ product.name }}');">
+                            <i class="fa fas fa-trash"></i>
+                        </button>
+                        <button type="button" class="btn btn-info btn-sm btn-edit" data-toggle="tooltip" title="Edit">
+                            <i class="fa fas fa-pencil"></i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm btn-save no-display" data-toggle="tooltip" title="Save" onclick="save_product_row(this);">
+                            <i class="fa fas fa-save"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Add to meal">
+                            <i class="fa fas fa-plus"></i>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="delete-product-modal" tabindex="-1" role="dialog" aria-labelledby="delete-product-modal-label"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delete-product-modal-label">Are you sure?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                    You are going to delete<br><b class="prod-name"></b>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-delete" type="button" onclick="send_ajax(this);">Confirm</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ block.super }}
     <script>
-
         $(document).ready(function () {
-            $('#product-datatable').DataTable({
+            datatable = $('#product-datatable').DataTable({
                 dom: 'Bfrtip',
                 responsive: true,
                 columnDefs: [
-{#                    {targets: "_all", orderable: false},#}
+                    {targets: [6], orderable: false},
                     {targets: [0, 1, 2, 3, 4, 5, 6], className: "desktop"},
-                    {targets: [7], className: "tablet, mobile"}
+                    {targets: [0], className: "tablet, mobile"}
                 ],
-                initComplete: function() {
-                    $('#hide').show();
+                initComplete: function () {
+                    $('#hide').removeClass('no-display');
                     unblockui();
                 }
             });
         });
+
+        function question_delete(prod_slug, prod_name) {
+            var modal = $('#delete-product-modal');
+            modal.find('.prod-name').text(prod_name);
+            modal.find('.btn-delete').data('href', '{% url 'product-delete' 'abc' %}'.replace('abc', prod_slug));
+            modal.modal('show');
+        }
     </script>
 {% endblock %}

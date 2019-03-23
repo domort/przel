@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^product/list/$', core_views.ProductListView.as_view(), name='product-list'),
     url(r'^product/add/$', core_views.ProductCreateView.as_view(), name='product-add'),
     url(r'^product/(?P<slug>[-\w]+)/update$', core_views.ProductUpdateView.as_view(), name='product-edit'),
+    url(r'^product/(?P<slug>[-\w]+)/delete', core_views.ProductDeleteView.as_view(), name='product-delete'),
 
     # Customized auth / registration views
     url(r'^accounts/login/$', core_views.PrzelLoginView.as_view(), name='przel_login'),
