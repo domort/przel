@@ -4,22 +4,17 @@
     <script>
         blockui();
     </script>
-    <style>
-        .prod-value-text.toggleable {
-            cursor: pointer;
-        }
-    </style>
     <div id="hide" class="no-display">
-        <table id="product-datatable" class="table-striped" style="width: 100%;">
+        <table id="product-datatable" class="table-striped">
             <thead>
             <tr>
-                <th style="width:43%;">Name</th>
-                <th style="width:7%;">Carbs</th>
-                <th style="width:7%;">Protein</th>
-                <th style="width:7%;">Fat</th>
-                <th style="width:7%;">Energy</th>
-                <th style="width:11%;">Unit weight</th>
-                <th style="width:14%;" class="no-sort">Actions</th>
+                <th class="w-widest">Name</th>
+                <th class="w-narrow">Carbs</th>
+                <th class="w-narrow">Protein</th>
+                <th class="w-narrow">Fat</th>
+                <th class="w-narrow">Energy</th>
+                <th class="w-wider">Unit weight</th>
+                <th class="w-last no-sort">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -30,7 +25,7 @@
                             <span>{{ product.name }}</span>
                         </div>
                         <div class="prod-value-input no-display">
-                            <input required type="text" maxlength="255" class="form-control"
+                            <input required type="text" maxlength="255" class="form-control" name="name"
                                    value="{{ product.name }}" placeholder="Product name">
                         </div>
                     </td>
@@ -39,7 +34,7 @@
                             <span>{{ product.carb.normalize }}</span>
                         </div>
                         <div class="prod-value-input no-display">
-                            <input required type="number" step="0.01" min="0" class="form-control"
+                            <input required type="number" step="0.01" min="0" class="form-control" name="carb"
                                    value="{{ product.carb.normalize }}" placeholder="Carbs">
                         </div>
                     </td>
@@ -48,7 +43,7 @@
                             <span>{{ product.protein.normalize }}</span>
                         </div>
                         <div class="prod-value-input no-display">
-                            <input required type="number" step="0.01" min="0" class="form-control"
+                            <input required type="number" step="0.01" min="0" class="form-control" name="protein"
                                    value="{{ product.protein.normalize }}" placeholder="Protein">
                         </div>
                     </td>
@@ -57,7 +52,7 @@
                             <span>{{ product.fat.normalize }}</span>
                         </div>
                         <div class="prod-value-input no-display">
-                            <input required type="number" step="0.01" min="0" class="form-control"
+                            <input required type="number" step="0.01" min="0" class="form-control" name="fat"
                                    value="{{ product.fat.normalize }}" placeholder="Fat">
                         </div>
                     </td>
@@ -66,7 +61,7 @@
                             <span>{{ product.energy.normalize }}</span>
                         </div>
                         <div class="prod-value-input no-display">
-                            <input required type="number" step="0.01" min="0" class="form-control"
+                            <input required type="number" step="0.01" min="0" class="form-control" name="energy"
                                    value="{{ product.energy.normalize }}" placeholder="Energy">
                         </div>
                     </td>
@@ -75,21 +70,21 @@
                             <span>{{ product.unit_weight.normalize }}</span>
                         </div>
                         <div class="prod-value-input no-display">
-                            <input required type="number" step="0.01" min="0" class="form-control"
+                            <input required type="number" step="0.01" min="0" class="form-control" name="unit_weight"
                                    value="{{ product.unit_weight.normalize }}" placeholder="Unit weight">
                         </div>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Delete" onclick="question_delete('{{ product.slug }}', '{{ product.name }}');">
+                        <button type="button" class="btn btn-warning btn-sm display-inline" data-toggle="tooltip" title="Delete" onclick="question_delete('{{ product.slug }}', '{{ product.name }}');">
                             <i class="fa fas fa-trash"></i>
                         </button>
-                        <button type="button" class="btn btn-info btn-sm btn-edit" data-toggle="tooltip" title="Edit">
+                        <button type="button" class="btn btn-info btn-sm btn-edit display-inline" data-toggle="tooltip" title="Edit" onclick="edit_product_popup('{{ product.slug }}', '{{ product.name }}');">
                             <i class="fa fas fa-pencil"></i>
                         </button>
-                        <button type="button" class="btn btn-success btn-sm btn-save no-display" data-toggle="tooltip" title="Save" onclick="save_product_row(this);">
+                        <button type="button" class="btn btn-success btn-sm btn-save display-inline no-display" data-toggle="tooltip" title="Save" onclick="save_product_row(this);">
                             <i class="fa fas fa-save"></i>
                         </button>
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Add to meal">
+                        <button type="button" class="btn btn-primary btn-sm display-inline" data-toggle="tooltip" title="Add to meal">
                             <i class="fa fas fa-plus"></i>
                         </button>
                     </td>
@@ -120,11 +115,62 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="update-product-modal" role="dialog" aria-labelledby="update-product-modal-label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="update-product-modal-label"><span class="action"></span> Product</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="modal-title modal-error">Your form contains errors!</h6>
+                    <form id="product-form">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning mr-auto btn-delete" data-toggle="tooltip" title="Delete"
+                            onclick="">
+                        <i class="fa fas fa-trash"></i>
+                    </button>
+                    <button class="btn btn-primary btn-submit" type="button" onclick="">Submit</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="success-msg-modal" tabindex="-1" role="dialog" aria-labelledby="success-msg-modal-label"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="success-msg-modal-label">Success</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">Product has been <span class="action">XXXXX</span>!</div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-delete" type="button" onclick="reload();">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
     {{ block.super }}
     <script>
+        var PRODUCT_CREATE_URL = '{% url 'product-add' %}';
+        var PRODUCT_UPDATE_URL = '{% url 'product-edit' 'XXX' %}';
+        var PRODUCT_DELETE_URL = '{% url 'product-delete' 'XXX' %}';
+
         $(document).ready(function () {
             datatable = $('#product-datatable').DataTable({
                 dom: 'Bfrtip',
@@ -132,7 +178,7 @@
                 columnDefs: [
                     {targets: [6], orderable: false},
                     {targets: [0, 1, 2, 3, 4, 5, 6], className: "desktop"},
-                    {targets: [0], className: "tablet, mobile"}
+                    {targets: [0, 6], className: "tablet, mobile"}
                 ],
                 initComplete: function () {
                     $('#hide').removeClass('no-display');
@@ -140,12 +186,5 @@
                 }
             });
         });
-
-        function question_delete(prod_slug, prod_name) {
-            var modal = $('#delete-product-modal');
-            modal.find('.prod-name').text(prod_name);
-            modal.find('.btn-delete').data('href', '{% url 'product-delete' 'abc' %}'.replace('abc', prod_slug));
-            modal.modal('show');
-        }
     </script>
 {% endblock %}

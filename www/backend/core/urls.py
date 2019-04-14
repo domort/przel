@@ -10,7 +10,11 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^meal/$', core_views.MealView.as_view(), name='meal'),
     url(r'^product/list/$', core_views.ProductListView.as_view(), name='product-list'),
-    url(r'^product/add/$', core_views.ProductCreateView.as_view(), name='product-add'),
+    url(r'^product/add/form$', core_views.ProductCreateView.as_view(), kwargs={'action': 'get-form'},
+        name='product-add-form'),
+    url(r'^product/add$', core_views.ProductCreateView.as_view(), name='product-add'),
+    url(r'^product/(?P<slug>[-\w]+)/update/form$', core_views.ProductUpdateView.as_view(),
+        kwargs={'action': 'get-form'}, name='product-edit-form'),
     url(r'^product/(?P<slug>[-\w]+)/update$', core_views.ProductUpdateView.as_view(), name='product-edit'),
     url(r'^product/(?P<slug>[-\w]+)/delete', core_views.ProductDeleteView.as_view(), name='product-delete'),
 

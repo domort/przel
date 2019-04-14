@@ -1,5 +1,54 @@
-{% extends 'base.html' %}
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-md-6">
+            {% include 'partials/forms/form-field.html' with field=form.name class="form-control" %}
+        </div>
+        <div class="col-md-6">
+            {% include 'partials/forms/form-field.html' with field=form.energy class="form-control" %}
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-md-4">
+            {% include 'partials/forms/form-field.html' with field=form.fat class="form-control" %}
+        </div>
+        <div class="col-md-4">
+            {% include 'partials/forms/form-field.html' with field=form.protein class="form-control" %}
+        </div>
+        <div class="col-md-4">
+            {% include 'partials/forms/form-field.html' with field=form.carb class="form-control" %}
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-md-4">
+            {% include 'partials/forms/form-field.html' with field=form.fat_sat class="form-control" %}
+        </div>
+        <div class="col-md-4">
+            {% include 'partials/forms/form-field.html' with field=form.fiber class="form-control" %}
+        </div>
+        <div class="col-md-4">
+            {% include 'partials/forms/form-field.html' with field=form.salt class="form-control" %}
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-md-6">
+            {% include 'partials/forms/form-field.html' with field=form.category class="form-control" %}
+        </div>
+        <div class="col-md-6">
+            {% include 'partials/forms/form-field.html' with field=form.unit_weight class="form-control" %}
+        </div>
 
-{% block main-content %}
-    {{ form.as_p }}
-{% endblock %}
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-md-12">
+            {% include 'partials/forms/form-field.html' with field=form.unit_description class="form-control" rows=2 %}
+        </div>
+    </div>
+</div>

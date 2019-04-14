@@ -1,6 +1,7 @@
 import urllib
 import urllib2
 import json
+from decimal import Decimal
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -33,19 +34,55 @@ class MealView(LoginRequiredMixin, generic.TemplateView):
         pass
 
 
-class ProductCreateView(LoginRequiredMixin, generic.CreateView):
+class ProductFormMixin(object):
     model = Product
     template_name = 'product/product_form.html'
     fields = ['name', 'unit_weight', 'unit_description', 'category', 'protein', 'carb', 'fat', 'energy', 'fat_sat',
               'fiber', 'salt']
+    normalize_fields = ['unit_weight', 'protein', 'carb', 'fat', 'energy', 'fat_sat', 'fiber', 'salt']
+
+    def get(self, request, *args, **kwargs):
+        super_get = super(ProductFormMixin, self).get(request, *args, **kwargs)
+        action = kwargs.get('action')
+        if action == 'get-form':
+            return JsonResponse({'form': render_to_string(self.template_name, self.get_context_data())})
+        return super_get
+
+    def form_valid(self, form):
+        if getattr(self, 'create', False):
+            self.object = Product()
+        if self.request.is_ajax():
+            for f in self.fields_basic if self.request.POST.get('basic') else self.fields:
+                setattr(self.object, f, form.cleaned_data.get(f))
+            self.object.save()
+            return JsonResponse({'success': True})
+        else:
+            return super(ProductFormMixin, self).form_valid(form)
+
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse({'form': render_to_string(self.template_name, self.get_context_data(form=form))},
+                                status=400)
+        else:
+            return super(ProductFormMixin, self).form_invalid(form)
+
+    def get_initial(self):
+        initial = self.initial.copy()
+        for f in self.normalize_fields:
+            v = getattr(self.object, f, None)
+            if v is not None:
+                initial[f] = u'{:g}'.format(float(v))
+        return initial
 
 
-class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
+class ProductCreateView(LoginRequiredMixin, ProductFormMixin, generic.CreateView):
+    create = True
+
+
+class ProductUpdateView(LoginRequiredMixin, ProductFormMixin, generic.UpdateView):
     model = Product
     slug_url_kwarg = 'slug'
-    template_name = 'product/product_form.html'
-    fields = ['name', 'unit_weight', 'unit_description', 'category', 'protein', 'carb', 'fat', 'energy', 'fat_sat',
-              'fiber', 'salt']
+    fields_basic = ['name', 'carbs', 'protein', 'fat', 'energy', 'unit_weight']
 
 
 class ProductListView(LoginRequiredMixin, generic.ListView):
@@ -107,7 +144,6 @@ class PrzelRegistrationView(RegistrationView):
         """
         Send the activation email. The activation key is the username,
         signed using TimestampSigner.
-
         """
         activation_key = self.get_activation_key(user)
         context = self.get_email_context(activation_key)

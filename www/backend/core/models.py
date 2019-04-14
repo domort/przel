@@ -51,10 +51,10 @@ class EmailBasedUser(AbstractUser):
 class Product(models.Model):
     slug = models.SlugField(null=False, blank=False, unique=True)
 
-    name = models.CharField(null=False, blank=False, unique=True, verbose_name='Name', max_length=255)
+    name = models.CharField(null=False, blank=False, unique=True, max_length=255, verbose_name='Name')
     unit_weight = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Unit weight')
     unit_description = models.TextField(null=False, blank=True, verbose_name='Unit Description')
-    category = models.CharField(null=False, blank=True, verbose_name='Name', max_length=255)
+    category = models.CharField(null=False, blank=True, max_length=255, verbose_name='Category')
 
     protein = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Protein')
     carb = models.DecimalField(max_digits=16, decimal_places=2, null=False, blank=False, verbose_name='Carbs')
@@ -69,7 +69,7 @@ class Product(models.Model):
         ordering = ['name', ]
 
     def __unicode__(self):
-        return '{} [{}]'.format(self.name or "<Unnamed Item>", self.category or '<Uncategorized>')
+        return u'{} [{}]'.format(self.name or u"<Unnamed Item>", self.category or u'<Uncategorized>')
 
     def _get_unique_slug(self):
         slug = slugify(self.name[:30])
@@ -97,4 +97,4 @@ class MealElement(models.Model):
     in_grams = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return 'Product: {}, Amount: {}, In grams: {}'.format(self.product, self.amount, self.in_grams)
+        return u'Product: {}, Amount: {}, In grams: {}'.format(self.product, self.amount, self.in_grams)

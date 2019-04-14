@@ -4,9 +4,9 @@
     <label class="form-control-label" for="{{ field.auto_id }}">{% if label %}{{ label }}{% else %}{{ field.label }}{% endif %}</label>
 {% endif %}
 {% if field.errors %}
-    {% render_field field class+=class class+='is-invalid' type=type placeholder=placeholder %}
+    {% render_field field class+=class class+='is-invalid' type=type placeholder=placeholder rows=rows %}
 {% else %}
-    {% render_field field class+=class type=type placeholder=placeholder %}
+    {% render_field field class+=class type=type placeholder=placeholder rows=rows autofocus=True %}
 {% endif %}
 {% if field.errors %}
     <div class="invalid-feedback">{{ field.errors|striptags }}</div>
